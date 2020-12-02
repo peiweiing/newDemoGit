@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget id="A6151272665841" security="true" version="1.1.0">
+<name>小哥疯跑跑腿1</name>
+<description>小哥疯跑跑腿1</description>
+       <author email="" href="http://www.we7x.cc">小哥疯跑跑腿1</author>
+       <content src="index.html"/>
+       <preference name="windowBackground" value=""/>
+       <preference name="autoLaunch" value="true"/>
+       <preference name="autoUpdate" value="true"/>
+       <preference name="smartUpdate" value="true"/>
+       <preference name="backgroundMode" value="location"/>
+       <preference name="urlScheme" value="iosamap"/>
+       <preference name="querySchemes" value="iosamap"/>
+       <preference name="pageBounce" value="false"/>
+       <preference name="hScrollBarEnabled" value="false"/>
+       <preference name="vScrollBarEnabled" value="false"/>
+       <preference name="fullScreen" value="false"/>
+       <preference name="iOS7StatusBarAppearance" value="false"/>
+       <preference name="appBackground" value="#FFF"/>
+       <preference name="userAgent" value="DLALAWAIMAI"/>
+       <permission name="contact"/>
+       <permission name="call"/>
+       <permission name="location"/>
+       <permission name="camera"/>
+       <access origin="*"/>
+       <feature name="ajpush">
+       <param name="app_key" value="86e126cb4b2db3efd25074e5"/>
+       <param name="channel" value="developer-default"/>
+       </feature>  <feature name="aMapLBS">
+       <param name="android_api_key" value="e6748a4ba2cfa1b1eeb2bfb98f6bea85"/>
+       <param name="ios_api_key" value="e6748a4ba2cfa1b1eeb2bfb98f6bea85"/>
+       </feature><preference name="debug" value="false"/>
+</widget>

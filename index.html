@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>登录</title>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="./script/light7/light7.min.css" />
+	<link rel="stylesheet" href="./script/light7/index.css" />
+	<script type='text/javascript' src="./script/jquery-2.2.1.min.js"></script>
+	<script type='text/javascript' src='./script/light7/light7.min.js' charset='utf-8'></script>
+</head>
+<body>
+<style>
+	.page .content{background-color: #F5F5F5;}
+	.content .login-header{padding: 30px 15px 125px;background: #0EC3B3;}
+	.content .login-header .login-title{color: #fff;font-size: 25px;font-weight: 500;}
+	.content .login-group{position: absolute;top: 90px;left: 15px;right: 15px;background-color: #fff;border-radius: 5px;padding: 20px;}
+	.login-group .login-avatar{width: 100%;padding-top: 20px;}
+	.login-group .login-avatar .avatar{width: 80px;height: 80px;margin: 0 auto;}
+	.login-group .login-avatar .avatar img{width: 100%;height: 100%;border-radius: 15px;}
+	.login-group .login-avatar .login-title{text-align: center;padding: 15px 0;font-size: 18px; font-weight: bold; color: #333;}
+	.login-group .list-block{margin: 0;font-size: 16px;}
+	.list-block .item-content{position: relative;padding: 10px 0;width: 100%;height: 45px;line-height: 25px;font-size: 16px;border-bottom: 1px solid #eee;}
+	.list-block .item-content input{font-size: 16px;color: #7a7a7a;}
+	.list-block .item-content .input-pass{width: 70%;}
+	.list-block .item-content .forget{font-size: 14px;text-align: right;}
+	.login-group .content-block{padding: 0;margin: 30px 0 10px;}
+	.login-group .content-block .button{color: #fff;border: 1px solid #0EC3B3;background-color: #0EC3B3;}
+</style>
+<div class="page check-serial">
+	<div class="content hide">
+		<div class="login-header">
+			<div class="login-title">欢迎登录</div>
+		</div>
+		<div class="login-group">
+			<div class="login-avatar">
+				<div class="avatar">
+					<img src="./icon/logo.png" alt="">
+				</div>
+				<div class="login-title">外卖助手配送端</div>
+			</div>
+			<div class="list-block">
+				<div class="login-input">
+					<div class="item-content">
+						<input class="input-mobile" type="text" name="mobile" value="" placeholder="请输入配送员账号">
+					</div>
+					<div class="item-content">
+						<input class="input-pass" type="password" name="password" value="" placeholder="请输入配送员密码">
+					</div>
+				</div>
+			</div>
+			<div class="content-block">
+				<div class="row">
+					<div class="col-100"><a href="javascript:;" class="button button-big" id="btn-serial">登录</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+	function isIos() {
+		var userAgent = navigator.userAgent;
+		if(userAgent.indexOf('iPhone') > -1 || userAgent.indexOf('iPad') > -1 || userAgent.indexOf('Mac') > -1){
+			return true;
+		}
+		return false;
+	}
+
+	window.apiready = function(){
+		if(api.connectionType == 'none') {
+			api.openFrame({
+				name: 'frm_connection',
+				url: './html/connect.html',
+				bounces: true,
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: 'auto'
+				}
+			});
+			return false;
+		}
+
+		var url_cn = api.getPrefs({
+			sync: true,
+			key: 'url_cn'
+		});
+		if(url_cn) {
+			window.location.href = url_cn;
+			return;
+		}
+		$('.check-serial .content').removeClass('hide');
+
+		$('#btn-serial').click(function(){
+			var mobile = $.trim($('.input-mobile').val());
+			if(!mobile) {
+				$.toast('请输入配送员账号');
+				return false;
+			}
+			var password = $.trim($('.input-pass').val());
+			if(!password) {
+				$.toast('请输入配送员密码');
+				return false;
+			}
+			$.showIndicator();
+			var client = 'android';
+			if(isIos()) {
+				client = 'ios';
+			}
+	/**		api.ajax({
+				url: 'https://baihu.xuanmeng.vip/app/index.php?i=1&c=entry&do=serial&op=deliveryer_v2&m=tiny_manage',
+				method: 'post',
+				timeout: 300,
+				data: {
+					values: {serial_sn: serial, client: client}
+				}
+			}, function(ret) {
+			**/
+				var ret={"message":{"resultCode":0,"resultMessage":"","data":{"uniacid":3,"serial_sn":"A6003407527025","url_cn":"https://baihu.xuanmeng.vip/addons/we7_wmall/template/deliveryer/index.html?menu=#/pages/order/takeout?i=3","url":"https://baihu.xuanmeng.vip","api_login_url":"https://baihu.xuanmeng.vip/app/wxapp.php?i=3&m=we7_wmall&c=entry&do=mobile&ctrl=delivery&ac=auth&op=login&from=vue"}},"redirect":"","type":"ajax"};
+				if(true) {
+	        var result = ret.message;
+					if(result.resultCode != 0) {
+						$.hideIndicator();
+						$.toast(result.resultMessage);
+						return false;
+					} else {
+						var authInfo = result;
+						api.ajax({
+							url: authInfo.data.api_login_url,
+							method: 'post',
+							timeout: 300,
+							data: {
+								values: {
+									mobile: mobile,
+									password: password
+								}
+							}
+						}, function(ret) {
+							if(ret) {
+								var url_cn = authInfo.data.url_cn;
+								api.setPrefs({
+									key: 'url',
+									value: authInfo.data.url
+								});
+								api.setPrefs({
+									key: 'url_cn',
+									value: authInfo.data.url_cn
+								});
+								api.setPrefs({
+									key: 'uniacid',
+									value: authInfo.data.uniacid
+								});
+								api.setPrefs({
+									key: 'serial_sn',
+									value: authInfo.data.serial_sn
+								});
+								var phonic = {
+									voice: 1,
+									vibrate: 1,
+									voice_type: 1
+								};
+								api.setPrefs({
+									key: 'idphonic',
+									value: phonic
+								});
+
+								var result = ret.message;
+								if(!result.errno) {
+									api.setPrefs({
+										key: 'idtoken',
+										value: result.message.deliveryer.token
+									});
+								}
+								window.location.href = url_cn;
+								return;
+							}
+						});
+						return;
+					}
+				}
+			});
+	//	});
+		$.init();
+	};
+</script>
+</html>
